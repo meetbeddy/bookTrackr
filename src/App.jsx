@@ -4,6 +4,7 @@ import Dashboard from "./components/dashboard/Index";
 import AddPurchase from "./components/store-keeper/purchase/AddPurchase";
 import VerifyPurchase from "./components/admin/verify-purchase/VerifyPurchase";
 import ManageUsers from "./components/admin/users/ManageUsers";
+import TextbookSalesTracking from "./components/admin/reports/TextBookSalesTracking";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path='add-purchase' element={<AddPurchase />}></Route>
 				<Route path='verify' element={<VerifyPurchase />}></Route>
 				<Route path='users' element={<ManageUsers />}></Route>
+				<Route path='sales-report' element={<TextbookSalesTracking />}></Route>
 			</Route>
 		</Routes>
 	);
