@@ -13,10 +13,11 @@ export const signin = (formData, Swal, setLoading) => async (dispatch) => {
 			title: "Login Successful",
 			text: "You have successfully logged in!",
 		});
+		await new Promise((resolve) => setTimeout(resolve, 0));
 		// history.push('/dashboard')
 		window.location.href = "/dashboard";
 	} catch (error) {
-		// console.log(error?.response?.data?.message)
+		console.log(error);
 
 		Swal.fire({
 			icon: "error",

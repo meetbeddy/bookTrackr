@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 	firstName: yup.string().required("First name is required"),
 	lastName: yup.string().required("Last name is required"),
 	email: yup.string().email("Invalid email").required("Email is required"),
-	phoneNumber: yup.string().required("Phone number is required"),
+	phone: yup.string().required("Phone number is required"),
 	password: yup.string().required("Password is required"),
 	role: yup.string().required("Role is required"),
 });
@@ -29,7 +29,7 @@ const UserForm = ({ open, onClose, onSubmit }) => {
 		resolver: yupResolver(schema),
 	});
 
-	const roles = ["bookstore staff", "department staff"]; // List of available roles
+	const roles = ["bookstore staff", "department staff"];
 
 	return (
 		<Dialog open={open} onClose={onClose}>
@@ -83,7 +83,7 @@ const UserForm = ({ open, onClose, onSubmit }) => {
 						)}
 					/>
 					<Controller
-						name='phoneNumber'
+						name='phone'
 						control={control}
 						rules={{ required: "Phone number is required" }}
 						render={({ field }) => (
@@ -92,8 +92,8 @@ const UserForm = ({ open, onClose, onSubmit }) => {
 								margin='normal'
 								label='Phone Number'
 								fullWidth
-								error={!!errors.phoneNumber}
-								helperText={errors.phoneNumber?.message}
+								error={!!errors.phone}
+								helperText={errors.phone?.message}
 							/>
 						)}
 					/>

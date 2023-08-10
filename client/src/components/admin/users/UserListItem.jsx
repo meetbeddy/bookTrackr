@@ -9,7 +9,7 @@ const UserListItem = ({ user, onDelete }) => {
 				{user.firstName} {user.lastName}
 			</TableCell>
 			<TableCell>{user.email}</TableCell>
-			<TableCell>{user.phoneNumber}</TableCell>
+			<TableCell>{user.phone}</TableCell>
 			<TableCell>{user.role}</TableCell>
 			<TableCell>
 				<IconButton onClick={() => onDelete(user.id)}>

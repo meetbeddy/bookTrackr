@@ -2,15 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, Typography } from "@mui/material";
 import UserForm from "./UserForm";
 import UserList from "./UserList";
+import { useDispatch, useSelector } from "react-redux";
+import { createuser, getUsers } from "../../../actions/adminActions";
+
 import fakeUserList from "../../../data";
 
 const ManageUsers = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
-	const [users, setUsers] = useState();
+	// const [users, setUsers] = useState();
+
+	const users = useSelector((state) => state.admin.users);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		setUsers(fakeUserList);
-	});
+		dispatch(getUsers());
+	}, [dispatch]);
 	const openModal = () => {
 		setModalOpen(true);
 	};
@@ -20,10 +27,9 @@ const ManageUsers = () => {
 	};
 
 	const handleUserSubmit = (data) => {
-		// Here, you can handle the submission of the user data
-		console.log("Submitted user data:", data);
+		console.log(data);
+		dispatch(createuser(data));
 
-		// Close the modal after submission
 		closeModal();
 	};
 

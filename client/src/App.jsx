@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import PrivateRoute from "./common/PrivateRoute";
 import Dashboard from "./components/dashboard/Index";
 import AddPurchase from "./components/store-keeper/purchase/AddPurchase";
 import VerifyPurchase from "./components/admin/verify-purchase/VerifyPurchase";
@@ -10,8 +11,14 @@ import Login from "./components/login/Login";
 function App() {
 	return (
 		<Routes>
-			<Route path='/signin' element={<Login />} />
-			<Route path='/dashboard' element={<Dashboard />}>
+			<Route path='/' element={<Login />} />
+			<Route
+				path='/dashboard'
+				element={
+					<PrivateRoute>
+						<Dashboard />
+					</PrivateRoute>
+				}>
 				<Route
 					index
 					element={

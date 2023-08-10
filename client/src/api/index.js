@@ -14,3 +14,6 @@ API.interceptors.request.use((req) => {
 });
 
 export const signIn = (formData) => API.post("/api/v1/auth/signin", formData);
+export const createUser = (formData) =>
+	API.post("/api/v1/admin/createuser", formData);
+export const getUsers = () => API.get("/api/v1/admin/getusers");

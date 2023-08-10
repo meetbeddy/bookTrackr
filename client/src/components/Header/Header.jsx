@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
-import styles from "./Header.module.css";
-import { styled } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -12,6 +11,7 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Avatar from "@mui/material/Avatar";
+import styles from "./Header.module.css";
 
 const RootDiv = styled("div")({
 	display: "flex",
@@ -28,7 +28,9 @@ const PaperElevated = styled(Paper)({
 const Header = () => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-	const history = useNavigate();
+
+	console.log(user);
+	const navigate = useNavigate();
 	const location = useLocation();
 
 	useEffect(() => {
@@ -37,7 +39,7 @@ const Header = () => {
 
 	const logout = () => {
 		dispatch({ type: "LOGOUT" });
-		history.push("/");
+		navigate("/");
 		setUser(null);
 	};
 
@@ -48,8 +50,7 @@ const Header = () => {
 			const decodedToken = decode(token);
 			if (decodedToken.exp * 1000 < new Date().getTime()) logout();
 		}
-		// eslint-disable-next-line
-	}, [location, user]); //when location changes, set the user
+	}, [location, user]);
 
 	const [open, setOpen] = useState(false);
 	const anchorRef = useRef(null);
@@ -67,7 +68,7 @@ const Header = () => {
 	};
 
 	const openLink = (link) => {
-		history.push(`/${link}`);
+		navigate(`/${link}`);
 		setOpen(false);
 	};
 
@@ -78,7 +79,6 @@ const Header = () => {
 		}
 	};
 
-	// return focus to the button when we transitioned from !open -> open
 	const prevOpen = useRef(open);
 	useEffect(() => {
 		if (prevOpen.current === true && open === false) {
@@ -88,20 +88,22 @@ const Header = () => {
 		prevOpen.current = open;
 	}, [open]);
 
-	if (!user)
+	if (!user) {
 		return (
 			<div className={styles.header2}>
 				<img
 					style={{ width: "50px", cursor: "pointer" }}
-					onClick={() => history.push("/")}
+					onClick={() => navigate("/")}
 					src='https://i.postimg.cc/hGZKzdkS/logo.png'
 					alt='arc-invoice'
 				/>
-				<button onClick={() => history.push("/login")} className={styles.login}>
+				<button onClick={() => navigate("/")} className={styles.login}>
 					Get started
 				</button>
 			</div>
 		);
+	}
+
 	return (
 		<div className={styles.header}>
 			<RootDiv>
@@ -112,7 +114,7 @@ const Header = () => {
 						aria-haspopup='true'
 						onClick={handleToggle}>
 						<Avatar style={{ backgroundColor: "#1976D2" }}>
-							{user?.result?.name?.charAt(0)}
+							{user?.user?.firstName?.charAt(0)}
 						</Avatar>
 					</AvatarButton>
 					<Popper

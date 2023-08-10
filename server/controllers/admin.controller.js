@@ -10,7 +10,14 @@ import user from "../models/users.model.js";
  */
 
 export const createuser = asyncWrapper(async (req, res) => {
-	const { firstName, lastName, email, phone, password } = req.body;
+	const {
+		firstName,
+		lastName,
+		email,
+		phone,
+		password,
+		role: userRole,
+	} = req.body;
 
 	const { role } = req;
 
@@ -26,15 +33,36 @@ export const createuser = asyncWrapper(async (req, res) => {
 
 		const hashedPassword = await bcrypt.hash(password, 12);
 
-		await user.create({
+		const newUser = await user.create({
 			password: hashedPassword,
 			firstName,
 			lastName,
 			phone,
 			email,
+			role: userRole,
 		});
 
-		res.status(201).json({ message: "user created" });
+		res.status(201).json({ message: "user created", newUser });
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: "Something went wrong", error: err.message });
+	}
+});
+
+export const fetchusers = asyncWrapper(async (req, res) => {
+	const { role } = req;
+
+	try {
+		if (role !== "admin")
+			return res
+				.status(404)
+				.json({ message: "unauthorized to perform this operation" });
+		const users = await user
+			.find({ role: { $ne: "admin" } })
+			.select("-password");
+
+		res.status(201).json(users);
 	} catch (err) {
 		res
 			.status(500)

@@ -11,9 +11,6 @@ const NavBar = () => {
 		setUser(JSON.parse(localStorage.getItem("profile")));
 	}, [location]);
 
-	console.log(user);
-	// if (!user) return null;
-
 	return (
 		<div>
 			<nav className='navbar'>
