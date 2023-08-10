@@ -2,6 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/dashboard/Index";
 import AddPurchase from "./components/store-keeper/purchase/AddPurchase";
+import VerifyPurchase from "./components/admin/verify-purchase/VerifyPurchase";
+import ManageUsers from "./components/admin/users/ManageUsers";
 
 function App() {
 	return (
@@ -19,6 +21,8 @@ function App() {
 					}></Route>
 
 				<Route path='add-purchase' element={<AddPurchase />}></Route>
+				<Route path='verify' element={<VerifyPurchase />}></Route>
+				<Route path='users' element={<ManageUsers />}></Route>
 			</Route>
 		</Routes>
 	);
