@@ -5,10 +5,12 @@ import AddPurchase from "./components/store-keeper/purchase/AddPurchase";
 import VerifyPurchase from "./components/admin/verify-purchase/VerifyPurchase";
 import ManageUsers from "./components/admin/users/ManageUsers";
 import TextbookSalesTracking from "./components/admin/reports/TextBookSalesTracking";
+import Login from "./components/login/Login";
 
 function App() {
 	return (
 		<Routes>
+			<Route path='/signin' element={<Login />} />
 			<Route path='/dashboard' element={<Dashboard />}>
 				<Route
 					index
