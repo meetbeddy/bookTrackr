@@ -1,6 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/dashboard/Index";
+import AddPurchase from "./components/store-keeper/purchase/AddPurchase";
 
 function App() {
 	return (
@@ -16,6 +17,8 @@ function App() {
 							voluptatibus est.
 						</h1>
 					}></Route>
+
+				<Route path='add-purchase' element={<AddPurchase />}></Route>
 			</Route>
 		</Routes>
 	);

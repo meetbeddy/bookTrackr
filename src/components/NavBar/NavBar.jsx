@@ -45,7 +45,12 @@ const NavBar = () => {
 					</li>
 					{navigationConfig.map((item) => {
 						return (
-							<NavItem icon={item.icon} url={item.url} title={item.title} />
+							<NavItem
+								key={item.id}
+								icon={item.icon}
+								url={item.url}
+								title={item.title}
+							/>
 						);
 					})}
 

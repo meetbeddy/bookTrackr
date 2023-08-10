@@ -11,7 +11,7 @@ const navigationConfig = [
 		title: "Generate Reciept",
 		type: "item",
 		icon: "heroicons-outline:plus-circle",
-		url: "/dashboard/add-sales",
+		url: "/dashboard/add-purchase",
 	},
 	{
 		id: "dashboards.verify",
