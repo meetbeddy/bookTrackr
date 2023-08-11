@@ -20,7 +20,7 @@ const NavBar = () => {
 							<span className='link-text logo-text'>
 								<img
 									style={{ width: "50px" }}
-									src='https://i.postimg.cc/hGZKzdkS/logo.png'
+									src='/assets/images/bookTracker-logo.jpg'
 									alt='arc-invoice'
 								/>
 							</span>

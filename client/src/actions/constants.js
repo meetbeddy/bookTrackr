@@ -13,6 +13,7 @@ export const FETCH_USERS_BY_USER = "FETCH_PROFILE_USER";
 
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
+export const FETCH_ALL_PURCHASE = "FETCH_ALL_PURCHASE";
 
 export const FETCH_USERS = "FETCH_USERS";
 export const START_LOADING = "START_LOADING";

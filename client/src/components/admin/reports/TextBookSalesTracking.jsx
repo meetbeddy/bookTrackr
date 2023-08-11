@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
 	Container,
 	Typography,
@@ -14,47 +15,45 @@ import {
 	TextField,
 	Grid,
 } from "@mui/material";
+import { fetchAllPurchases } from "../../../actions/purchaseActions";
 
 const TextbookSalesTracking = () => {
-	const [salesData, setSalesData] = useState([
-		{
-			id: 1,
-			date: "2023-08-15",
-			textbook: "COS 101",
-			quantitySold: 25,
-			revenue: 750.0,
-		},
-		{
-			id: 2,
-			date: "2023-08-16",
-			textbook: "COS 301",
-			quantitySold: 18,
-			revenue: 540.0,
-		},
-	]);
+	const [salesData, setSalesData] = useState([]);
 	const [dateRangeFilter, setDateRangeFilter] = useState({});
-	const [textbookFilter, setTextbookFilter] = useState("");
+	const [selectedTextbook, setSelectedTextbook] = useState("");
+
+	const dispatch = useDispatch();
+	const purchases = useSelector((state) => state.purchase.purchases);
+
+	useEffect(() => {
+		dispatch(fetchAllPurchases());
+	}, [dispatch]);
+
+	const handleDateFromChange = (event) => {
+		setDateRangeFilter({ ...dateRangeFilter, from: event.target.value });
+	};
 
 	const handleDateToChange = (event) => {
 		setDateRangeFilter({ ...dateRangeFilter, to: event.target.value });
 	};
 
 	const handleTextbookFilterChange = (event) => {
-		setTextbookFilter(event.target.value);
+		setSelectedTextbook(event.target.value);
 	};
 
 	const generateReport = () => {
-		// Logic to generate sales report based on selected criteria
+		const query = {};
+
+		if (dateRangeFilter.from && dateRangeFilter.to) {
+			query.startDate = dateRangeFilter.from;
+			query.endDate = dateRangeFilter.to;
+		}
+
+		if (selectedTextbook && selectedTextbook !== "ALL") {
+			query.textbook = selectedTextbook;
+		}
+		dispatch(fetchAllPurchases(query));
 	};
-
-	// Fetch sales data or set it manually
-	// const fetchSalesData = () => {
-	//   // Fetch sales data from the backend or set it manually
-	//   const fetchedSalesData = ...;
-	//   setSalesData(fetchedSalesData);
-	// };
-
-	// useEffect(fetchSalesData, []); // Fetch sales data on component mount
 
 	return (
 		<Container>
@@ -69,9 +68,7 @@ const TextbookSalesTracking = () => {
 							label='From Date'
 							type='date'
 							value={dateRangeFilter.from || ""}
-							onChange={(e) =>
-								setDateRangeFilter({ ...dateRangeFilter, from: e.target.value })
-							}
+							onChange={handleDateFromChange}
 							InputLabelProps={{
 								shrink: true,
 							}}
@@ -93,13 +90,14 @@ const TextbookSalesTracking = () => {
 					<Grid item xs={12} sm={4}>
 						<TextField
 							label='Textbook Filter'
-							value={textbookFilter}
+							value={selectedTextbook}
 							onChange={handleTextbookFilterChange}
 							select
 							fullWidth>
 							<MenuItem value='' disabled>
 								Select Textbook
 							</MenuItem>
+							<MenuItem value='ALL'>ALL</MenuItem>
 							<MenuItem value='COS 101'>COS 101</MenuItem>
 							<MenuItem value='COS 301'>COS 301</MenuItem>
 						</TextField>
@@ -122,14 +120,15 @@ const TextbookSalesTracking = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{salesData.map((sale) => (
-								<TableRow key={sale.id}>
-									<TableCell>{sale.date}</TableCell>
-									<TableCell>{sale.textbook}</TableCell>
-									<TableCell>{sale.quantitySold}</TableCell>
-									<TableCell>{sale.revenue}</TableCell>
-								</TableRow>
-							))}
+							{purchases &&
+								purchases.map((purchase, i) => (
+									<TableRow key={i}>
+										<TableCell>{purchase._id.date}</TableCell>
+										<TableCell>{purchase._id.textbook}</TableCell>
+										<TableCell>{purchase.totalQuantitySold}</TableCell>
+										<TableCell>{purchase.totalRevenue}</TableCell>
+									</TableRow>
+								))}
 						</TableBody>
 					</Table>
 				</TableContainer>

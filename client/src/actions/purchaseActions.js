@@ -1,29 +1,12 @@
 import * as api from "../api/index";
-import {
-	ADD_NEW_USER,
-	ALL_USERS,
-	DELETE_USER,
-	START_LOADING,
-} from "./constants";
+import { FETCH_ALL_PURCHASE } from "./constants";
 
-export const createPuchase = (purchase, Swal) => async (dispatch) => {
+export const fetchAllPurchases = (query) => async (dispatch) => {
 	try {
-		const { data } = await api.createPurchase(purchase);
+		const { data } = await api.fetchAllPurchases(query);
 
-		dispatch({ type: ADD_NEW_USER, payload: data });
-
-		Swal.fire({
-			icon: "success",
-			title: "User Account Created",
-			text: "You have successfully created new user!",
-		});
+		dispatch({ type: FETCH_ALL_PURCHASE, payload: data });
 	} catch (error) {
 		console.log(error);
-
-		Swal.fire({
-			icon: "error",
-			title: "Create user failed",
-			text: error?.response?.data?.message,
-		});
 	}
 };

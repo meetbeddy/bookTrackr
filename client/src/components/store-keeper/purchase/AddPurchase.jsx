@@ -28,6 +28,7 @@ function AddPurchase() {
 			phoneNumber: data.phoneNumber,
 			department: data.department,
 			textbook: data.textbook,
+			amount: data.amount,
 			verificationCode: data.verificationCode,
 		};
 		setReceiptData(receipt);
@@ -39,9 +40,13 @@ function AddPurchase() {
 
 	return (
 		<div className='flex justify-center items-center min-h-screen bg-gray-100'>
-			<div className='w-full max-w-md'>
+			<div className='w-full '>
 				{receiptData ? (
-					<Receipt data={receiptData} newTransaction={handleNewTransaction} />
+					<Receipt
+						data={receiptData}
+						newTransaction={handleNewTransaction}
+						button={true}
+					/>
 				) : (
 					<AddPurchaseForm
 						setSubmitSuccess={setSubmitSuccess}

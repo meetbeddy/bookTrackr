@@ -65,3 +65,63 @@ export const verifyPurchase = asyncWrapper(async (req, res) => {
 			.json({ message: "Something went wrong", error: err.message });
 	}
 });
+
+export const fetchPurchase = asyncWrapper(async (req, res) => {
+	try {
+		const purchases = await Purchase.find();
+
+		res.status(200).json(purchases);
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: "Something went wrong", error: err.message });
+	}
+});
+
+export const generateSalesReport = async (req, res) => {
+	try {
+		const { fromDate, toDate, textbook, verifyStatus } = req.query;
+
+		const matchConditions = {
+			verified: true,
+		};
+		if (verifyStatus) {
+			matchConditions.verified = verifyStatus;
+		}
+
+		if (fromDate && toDate) {
+			matchConditions.createdAt = {
+				$gte: new Date(fromDate),
+				$lte: new Date(toDate),
+			};
+		}
+
+		if (textbook) {
+			matchConditions.textbook = textbook;
+		}
+
+		const salesReport = await Purchase.aggregate([
+			{
+				$match: matchConditions,
+			},
+			{
+				$group: {
+					_id: {
+						date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+						textbook: "$textbook",
+					},
+					totalQuantitySold: { $sum: 1 },
+					totalRevenue: { $sum: { $toDouble: "$amount" } },
+				},
+			},
+			{
+				$sort: { "_id.date": 1, "_id.textbook": 1 },
+			},
+		]);
+
+		res.status(200).json(salesReport);
+	} catch (error) {
+		console.error("Error generating sales report:", error);
+		res.status(500).json({ message: "Something went wrong" });
+	}
+};

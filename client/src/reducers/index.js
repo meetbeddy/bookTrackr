@@ -2,6 +2,6 @@ import { combineReducers } from "redux";
 
 import admin from "./admin";
 import auth from "./auth";
-import profiles from "./profiles";
+import purchase from "./purchase";
 
-export default combineReducers({ admin, auth, profiles });
+export default combineReducers({ admin, auth, purchase });

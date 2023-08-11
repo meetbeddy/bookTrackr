@@ -23,3 +23,5 @@ export const createPurchase = (data) => API.post("/purchase/addpuchase", data);
 export const fetchTextbooks = () => API.get("/admin/gettextbook");
 
 export const verifyPurchase = (id) => API.get(`/purchase/verifypurchase/${id}`);
+export const fetchAllPurchases = (query) =>
+	API.get("/purchase/fetchpurchases", { params: query });

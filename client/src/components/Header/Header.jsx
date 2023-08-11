@@ -93,7 +93,7 @@ const Header = () => {
 				<img
 					style={{ width: "50px", cursor: "pointer" }}
 					onClick={() => navigate("/")}
-					src='https://i.postimg.cc/hGZKzdkS/logo.png'
+					src='/assets/images/bookTracker-logo.jpg'
 					alt='arc-invoice'
 				/>
 				<button onClick={() => navigate("/")} className={styles.login}>

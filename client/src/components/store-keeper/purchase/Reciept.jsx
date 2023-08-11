@@ -1,5 +1,6 @@
 import React from "react";
 import { Paper, Typography, Container, Divider, Button } from "@mui/material";
+import QRCode from "react-qr-code";
 import dayjs from "dayjs";
 import "./invoice.module.css";
 
@@ -7,13 +8,17 @@ const Receipt = ({ data, newTransaction, button }) => {
 	const formattedAmount = new Intl.NumberFormat("en-NG", {
 		style: "currency",
 		currency: "NGN",
-	}).format(data.amount);
+	}).format(data.amount || data.price);
 	return (
 		<Container maxWidth='md' className='mt-4'>
 			<Paper elevation={3} className='p-8 receipt invoiceLayout'>
 				<div className='header'>
 					<Typography variant='h5'>Receipt</Typography>
-					<img src='/path/to/your/logo.png' alt='Logo' className='logo' />
+					<img
+						src='/assets/images/bookTracker-logo.jpg'
+						alt='Logo'
+						className='logo w-16'
+					/>
 				</div>
 				<Divider className='mb-6' />
 				<div className='flex justify-between mb-4 w-full'>
@@ -24,13 +29,21 @@ const Receipt = ({ data, newTransaction, button }) => {
 						Receipt #: {data.receiptNumber}
 					</Typography>
 				</div>
-				<div className='contacts w-full'>
-					<div className='address border rounded p-3 m-1 w-full'>
+				<div className='contacts w-full flex justify-between border rounded p-3 m-1 '>
+					<div className='address '>
 						<h4 className='text-bold'>Student Info:</h4>
 						<p>{data.studentName}</p>
 						<p>{data.regNum}</p>
 						<p>{data.phoneNumber}</p>
 						<p>{data.department}</p>
+					</div>
+					<div className='w-32 h2-32'>
+						<QRCode
+							size={256}
+							style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+							value={data.verificationCode}
+							viewBox={`0 0 256 256`}
+						/>
 					</div>
 				</div>
 				<table className='w-full mb-6'>
