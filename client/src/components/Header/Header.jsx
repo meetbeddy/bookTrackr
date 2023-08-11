@@ -29,7 +29,6 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-	console.log(user);
 	const navigate = useNavigate();
 	const location = useLocation();
 

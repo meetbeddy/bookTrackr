@@ -1,8 +1,8 @@
 import React from "react";
-import { Paper, Typography, Container, Divider } from "@mui/material";
+import { Paper, Typography, Container, Divider, Button } from "@mui/material";
 import "./invoice.module.css";
 
-const Receipt = ({ data }) => {
+const Receipt = ({ data, newTransaction }) => {
 	return (
 		<Container maxWidth='md' className='mt-4'>
 			<Paper elevation={3} className='p-8 receipt invoiceLayout'>
@@ -27,11 +27,6 @@ const Receipt = ({ data }) => {
 						<p>{data.phoneNumber}</p>
 						<p>{data.department}</p>
 					</div>
-					{/* Add seller contact info if needed */}
-					{/* <div className="dates">
-            <h4>Date Issued:</h4>
-            <p>{new Date().toLocaleDateString()}</p>
-          </div> */}
 				</div>
 				<table className='w-full mb-6'>
 					<thead>
@@ -65,6 +60,13 @@ const Receipt = ({ data }) => {
 				<Typography variant='body2' className='font-bold'>
 					Verification Code: {data.verificationCode}
 				</Typography>
+				<Button
+					variant='contained'
+					color='primary'
+					onClick={newTransaction}
+					className='mt-4'>
+					Perform Another Transaction
+				</Button>
 			</Paper>
 		</Container>
 	);

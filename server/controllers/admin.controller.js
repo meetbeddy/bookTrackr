@@ -95,7 +95,7 @@ export const deleteuser = asyncWrapper(async (req, res) => {
 	}
 });
 
-export const createtextbok = asyncWrapper(async (req, res) => {
+export const createtextbook = asyncWrapper(async (req, res) => {
 	const { name, price } = req.body;
 
 	const { role } = req;
@@ -112,6 +112,18 @@ export const createtextbok = asyncWrapper(async (req, res) => {
 		});
 
 		res.status(201).json({ message: "textbook created" });
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: "Something went wrong", error: err.message });
+	}
+});
+
+export const fetchTextbooks = asyncWrapper(async (req, res) => {
+	try {
+		const textbooks = await Textbook.find();
+
+		res.status(201).json(textbooks);
 	} catch (err) {
 		res
 			.status(500)

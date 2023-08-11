@@ -5,6 +5,7 @@ const purchaseSchema = mongoose.Schema(
 		verificationCode: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		studentName: {
 			type: String,
@@ -29,6 +30,10 @@ const purchaseSchema = mongoose.Schema(
 		amount: {
 			type: String,
 			required: true,
+		},
+		verified: {
+			type: Boolean,
+			default: false,
 		},
 	},
 

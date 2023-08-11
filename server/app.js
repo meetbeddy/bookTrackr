@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/admin", admin);
-app.use("/api/v1/store", purchase);
+app.use("/api/v1/purchase", purchase);
 
 app.use(errorHandler);
 

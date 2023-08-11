@@ -9,4 +9,4 @@ const textbookSchema = mongoose.Schema(
 	{ timestamps: true }
 );
 
-export default mongoose.model("Purchase", textbookSchema);
+export default mongoose.model("Texbook", textbookSchema);

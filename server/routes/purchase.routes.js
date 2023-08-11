@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { signin, signup } from "../controllers/auth.controller.js";
+import auth from "../middlewares/auth.js";
+import {
+	createPurchase,
+	verifyPurchase,
+} from "../controllers/purchase.controller.js";
 
 const router = Router();
 
-router.post("/signin", signin);
-router.post("/signup", signup);
+router.post("/addpuchase", createPurchase);
+router.get("/verifypurchase/:id", verifyPurchase);
 
 export default router;

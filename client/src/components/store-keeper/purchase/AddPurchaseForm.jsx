@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Spinner from "../../Spinner/Spinner";
+import { createPurchase } from "../../../api";
+import Swal from "sweetalert2";
 
 const schema = yup.object().shape({
 	studentName: yup.string().required("Student Name is required"),
@@ -20,7 +22,7 @@ const schema = yup.object().shape({
 	textbook: yup.string().required("Textbook is required"),
 });
 
-const PurchaseForm = ({ setSubmitSuccess }) => {
+const PurchaseForm = ({ setSubmitSuccess, textbooks }) => {
 	const [isLoading, setIsloading] = useState(false);
 	const {
 		register,
@@ -30,17 +32,32 @@ const PurchaseForm = ({ setSubmitSuccess }) => {
 		resolver: yupResolver(schema),
 	});
 
-	const textbooks = ["COS 101", "COS 303"];
-
-	const onSubmit = async (data) => {
+	const onSubmit = async (formdata) => {
 		setIsloading(true);
-		// Simulate API call (replace with actual API call)
-		await new Promise((resolve) => setTimeout(resolve, 1500));
-		console.log(data); // Data will be sent to the backend
+		let receipt;
 
+		try {
+			const { data } = await createPurchase(formdata);
+
+			console.log(data);
+			receipt = data.newPurchase;
+
+			Swal.fire({
+				icon: "success",
+				title: "Purchase Created",
+				text: "Your purchase has been successfully created.",
+			});
+
+			console.log(receipt);
+		} catch (error) {
+			Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "An error occurred while creating the purchase.",
+			});
+		}
 		setIsloading(false);
-		setSubmitSuccess(data);
-		console.log(data);
+		setSubmitSuccess(receipt);
 	};
 
 	if (isLoading) {
@@ -109,8 +126,8 @@ const PurchaseForm = ({ setSubmitSuccess }) => {
 						<em>Select a textbook</em>
 					</MenuItem>
 					{textbooks.map((textbook) => (
-						<MenuItem key={textbook} value={textbook}>
-							{textbook}
+						<MenuItem key={textbook._id} value={textbook._id}>
+							{textbook.name}
 						</MenuItem>
 					))}
 				</TextField>

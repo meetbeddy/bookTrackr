@@ -17,3 +17,7 @@ export const signIn = (formData) => API.post("/auth/signin", formData);
 export const createUser = (formData) => API.post("/admin/createuser", formData);
 export const getUsers = () => API.get("/admin/getusers");
 export const deleteUser = (id) => API.delete(`/admin/deleteuser/${id}`);
+
+export const createPurchase = (data) => API.post("/purchase/addpuchase", data);
+
+export const fetchTextbooks = () => API.get("/admin/gettextbook");
