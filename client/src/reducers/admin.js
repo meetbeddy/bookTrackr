@@ -12,6 +12,7 @@ const admin = (state = { isLoading: true, users: [] }, action) => {
 			return { ...state, isLoading: true };
 		case END_LOADING:
 			return { ...state, isLoading: false };
+
 		case ALL_USERS:
 			return {
 				...state,

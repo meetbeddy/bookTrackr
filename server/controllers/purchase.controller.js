@@ -125,3 +125,45 @@ export const generateSalesReport = async (req, res) => {
 		res.status(500).json({ message: "Something went wrong" });
 	}
 };
+
+export const getDashboardData = async (req, res) => {
+	try {
+		const totalPurchases = await Purchase.countDocuments();
+		const pendingVerifications = await Purchase.countDocuments({
+			verified: false,
+		});
+		const verifiedPurchases = await Purchase.countDocuments({ verified: true });
+
+		// Get top books based on the number of purchases
+		const topBooks = await Purchase.aggregate([
+			{ $group: { _id: "$textbook", count: { $sum: 1 } } },
+			{ $sort: { count: -1 } },
+			{ $limit: 5 }, // You can adjust the number of top books to show
+		]);
+
+		// Calculate total revenue
+		const totalRevenueResult = await Purchase.aggregate([
+			{ $match: { verified: true } },
+			{
+				$group: { _id: null, totalRevenue: { $sum: { $toDouble: "$amount" } } },
+			},
+		]);
+
+		const totalRevenue =
+			totalRevenueResult.length > 0 ? totalRevenueResult[0].totalRevenue : 0;
+
+		const dashboardData = {
+			totalPurchases,
+			pendingVerifications,
+			verifiedPurchases,
+			topBooks,
+			totalRevenue,
+		};
+
+		res.json(dashboardData);
+	} catch (error) {
+		res
+			.status(500)
+			.json({ message: "Error fetching dashboard data", error: error.message });
+	}
+};

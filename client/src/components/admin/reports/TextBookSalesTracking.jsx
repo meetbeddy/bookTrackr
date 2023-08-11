@@ -110,6 +110,9 @@ const TextbookSalesTracking = () => {
 				</div>
 
 				<TableContainer>
+					<Typography className='text-red-500'>
+						*only verified sales are captured here
+					</Typography>
 					<Table>
 						<TableHead>
 							<TableRow>
@@ -119,6 +122,7 @@ const TextbookSalesTracking = () => {
 								<TableCell>Revenue</TableCell>
 							</TableRow>
 						</TableHead>
+
 						<TableBody>
 							{purchases &&
 								purchases.map((purchase, i) => (
@@ -126,7 +130,12 @@ const TextbookSalesTracking = () => {
 										<TableCell>{purchase._id.date}</TableCell>
 										<TableCell>{purchase._id.textbook}</TableCell>
 										<TableCell>{purchase.totalQuantitySold}</TableCell>
-										<TableCell>{purchase.totalRevenue}</TableCell>
+										<TableCell>
+											{new Intl.NumberFormat("en-NG", {
+												style: "currency",
+												currency: "NGN",
+											}).format(purchase?.totalRevenue || "-")}
+										</TableCell>
 									</TableRow>
 								))}
 						</TableBody>

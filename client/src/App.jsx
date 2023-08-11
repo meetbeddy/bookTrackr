@@ -7,6 +7,7 @@ import VerifyPurchase from "./components/admin/verify-purchase/VerifyPurchase";
 import ManageUsers from "./components/admin/users/ManageUsers";
 import TextbookSalesTracking from "./components/admin/reports/TextBookSalesTracking";
 import Login from "./components/login/Login";
+import Main from "./components/dashboard/Main";
 
 function App() {
 	return (
@@ -19,16 +20,7 @@ function App() {
 						<Dashboard />
 					</PrivateRoute>
 				}>
-				<Route
-					index
-					element={
-						<h1>
-							Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-							Praesentium, ea autem. Minus ducimus dicta totam tempore veniam at
-							voluptatum eos, quam, enim quaerat nulla ipsam? Veniam fuga nemo
-							voluptatibus est.
-						</h1>
-					}></Route>
+				<Route index element={<Main />}></Route>
 
 				<Route path='add-purchase' element={<AddPurchase />}></Route>
 				<Route path='verify' element={<VerifyPurchase />}></Route>
