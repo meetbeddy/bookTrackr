@@ -1,8 +1,13 @@
 import React from "react";
 import { Paper, Typography, Container, Divider, Button } from "@mui/material";
+import dayjs from "dayjs";
 import "./invoice.module.css";
 
-const Receipt = ({ data, newTransaction }) => {
+const Receipt = ({ data, newTransaction, button }) => {
+	const formattedAmount = new Intl.NumberFormat("en-NG", {
+		style: "currency",
+		currency: "NGN",
+	}).format(data.amount);
 	return (
 		<Container maxWidth='md' className='mt-4'>
 			<Paper elevation={3} className='p-8 receipt invoiceLayout'>
@@ -11,17 +16,17 @@ const Receipt = ({ data, newTransaction }) => {
 					<img src='/path/to/your/logo.png' alt='Logo' className='logo' />
 				</div>
 				<Divider className='mb-6' />
-				<div className='flex justify-between mb-4'>
-					<Typography variant='body2'>
-						Date: {new Date().toLocaleDateString()}
+				<div className='flex justify-between mb-4 w-full'>
+					<Typography variant='body2' className='text-left'>
+						Date: {dayjs(data.createdAt).format("YYYY-MM-DD")}
 					</Typography>
-					<Typography variant='body2' className='invoiceNumber'>
+					<Typography variant='body2' className='invoiceNumber text-right'>
 						Receipt #: {data.receiptNumber}
 					</Typography>
 				</div>
-				<div className='contacts'>
-					<div className='address'>
-						<h4>Buyer:</h4>
+				<div className='contacts w-full'>
+					<div className='address border rounded p-3 m-1 w-full'>
+						<h4 className='text-bold'>Student Info:</h4>
 						<p>{data.studentName}</p>
 						<p>{data.regNum}</p>
 						<p>{data.phoneNumber}</p>
@@ -38,35 +43,47 @@ const Receipt = ({ data, newTransaction }) => {
 					<tbody>
 						<tr>
 							<td className='text-left'>{data.textbook}</td>
-							<td className='text-right'>$50.00</td>
+							<td className='text-right'>{formattedAmount}</td>
 						</tr>
-						{/* Add more rows for additional purchased items */}
 					</tbody>
 				</table>
-				<div className='invoiceSummary'>
+				<div className='invoiceSummary flex justify-end'>
 					<div className='summaryItem'>
 						<span>Subtotal:</span>
-						<input type='text' className='amount' value='$50.00' readOnly />
+						<input
+							type='text'
+							className='amount'
+							value={formattedAmount}
+							readOnly
+						/>
 					</div>
 					<div className='summaryItem'>
 						<span>Discount:</span>
-						<input type='text' className='discount' value='$0.00' readOnly />
+						<input type='text' className='discount' value='0.00' readOnly />
 					</div>
 					<div className='summaryItem'>
 						<span>Total:</span>
-						<input type='text' className='amount' value='$50.00' readOnly />
+						<input
+							type='text'
+							className='amount'
+							value={formattedAmount}
+							readOnly
+						/>
 					</div>
 				</div>
-				<Typography variant='body2' className='font-bold'>
+
+				<Typography variant='h4' className='font-semibold'>
 					Verification Code: {data.verificationCode}
 				</Typography>
-				<Button
-					variant='contained'
-					color='primary'
-					onClick={newTransaction}
-					className='mt-4'>
-					Perform Another Transaction
-				</Button>
+				{button && (
+					<Button
+						variant='contained'
+						color='primary'
+						onClick={newTransaction}
+						className='mt-6'>
+						Perform Another Transaction
+					</Button>
+				)}
 			</Paper>
 		</Container>
 	);

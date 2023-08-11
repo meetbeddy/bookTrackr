@@ -17,6 +17,7 @@ import Receipt from "../../store-keeper/purchase/Reciept";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import "./verify.css";
+import { verifyPurchase } from "../../../api";
 
 const VerifyPurchase = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
@@ -34,49 +35,32 @@ const VerifyPurchase = () => {
 		reset,
 	} = useForm({ resolver: yupResolver(schema) });
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (formData) => {
+		const id = formData.verificationCode;
 		try {
-			// const response = await axios.post("YOUR_BACKEND_ENDPOINT", {
-			// 	verificationCode: data.verificationCode,
-			// });
+			const { data } = await verifyPurchase(id);
+			const result = data.foundPurchase;
 
-			const response = {
-				data: {
-					success: true,
-					message: "Verification successful",
-					data: {
-						verificationCode: "ABC123",
-						studentName: "John Doe",
-						regNum: "2023001",
-						phoneNumber: "123-456-7890",
-						department: "Computer Science",
-						textbook: "COS 101",
-						amount: "30.00",
-						date: "2023-08-15",
-					},
-				},
-			};
+			console.log(data);
 
-			const result = response.data;
-
-			if (result.success) {
+			if (result) {
 				Swal.fire({
 					icon: "success",
 					title: "Verification Successful!",
 					text: "Purchase has been successfully verified.",
 				}).then(() => {
-					setPurchaseData(result.data);
+					setPurchaseData(result);
 					setModalOpen(true);
-				});
-			} else {
-				Swal.fire({
-					icon: "error",
-					title: "Verification Failed",
-					text: "The provided verification code is incorrect.",
 				});
 			}
 		} catch (error) {
 			console.error("Error verifying purchase:", error);
+
+			Swal.fire({
+				icon: "error",
+				title: "Verification Failed",
+				text: "The provided verification code is incorrect.",
+			});
 		}
 	};
 
@@ -128,7 +112,7 @@ const VerifyPurchase = () => {
 				</DialogTitle>
 
 				<DialogContent dividers>
-					<Receipt data={purchaseData} />
+					<Receipt data={purchaseData} button={false} />
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleCloseModal} color='primary'>

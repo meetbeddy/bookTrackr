@@ -21,3 +21,5 @@ export const deleteUser = (id) => API.delete(`/admin/deleteuser/${id}`);
 export const createPurchase = (data) => API.post("/purchase/addpuchase", data);
 
 export const fetchTextbooks = () => API.get("/admin/gettextbook");
+
+export const verifyPurchase = (id) => API.get(`/purchase/verifypurchase/${id}`);

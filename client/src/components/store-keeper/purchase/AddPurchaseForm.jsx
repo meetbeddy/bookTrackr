@@ -39,7 +39,6 @@ const PurchaseForm = ({ setSubmitSuccess, textbooks }) => {
 		try {
 			const { data } = await createPurchase(formdata);
 
-			console.log(data);
 			receipt = data.newPurchase;
 
 			Swal.fire({
@@ -47,8 +46,6 @@ const PurchaseForm = ({ setSubmitSuccess, textbooks }) => {
 				title: "Purchase Created",
 				text: "Your purchase has been successfully created.",
 			});
-
-			console.log(receipt);
 		} catch (error) {
 			Swal.fire({
 				icon: "error",
