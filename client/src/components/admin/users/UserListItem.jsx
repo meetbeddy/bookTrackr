@@ -12,7 +12,7 @@ const UserListItem = ({ user, onDelete }) => {
 			<TableCell>{user.phone}</TableCell>
 			<TableCell>{user.role}</TableCell>
 			<TableCell>
-				<IconButton onClick={() => onDelete(user.id)}>
+				<IconButton onClick={() => onDelete(user._id)}>
 					<DeleteIcon />
 				</IconButton>
 			</TableCell>

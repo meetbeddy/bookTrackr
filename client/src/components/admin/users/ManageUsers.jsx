@@ -3,7 +3,12 @@ import { Button, Container, Typography } from "@mui/material";
 import UserForm from "./UserForm";
 import UserList from "./UserList";
 import { useDispatch, useSelector } from "react-redux";
-import { createuser, getUsers } from "../../../actions/adminActions";
+import {
+	createuser,
+	deleteUser,
+	getUsers,
+} from "../../../actions/adminActions";
+import Swal from "sweetalert2";
 
 import fakeUserList from "../../../data";
 
@@ -27,10 +32,25 @@ const ManageUsers = () => {
 	};
 
 	const handleUserSubmit = (data) => {
-		console.log(data);
-		dispatch(createuser(data));
+		dispatch(createuser(data, Swal));
 
 		closeModal();
+	};
+
+	const handleDelete = (id) => {
+		Swal.fire({
+			title: "Delete User",
+			text: `Are you sure you want to delete this user?`,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#d33",
+			cancelButtonColor: "#3085d6",
+			confirmButtonText: "Yes, delete it!",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				dispatch(deleteUser(id, Swal));
+			}
+		});
 	};
 
 	return (
@@ -44,7 +64,7 @@ const ManageUsers = () => {
 					Add User
 				</Button>
 			</div>
-			<UserList users={users} />
+			<UserList users={users} onDelete={handleDelete} />
 			<UserForm
 				open={isModalOpen}
 				onClose={closeModal}

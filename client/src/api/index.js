@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:5000" });
+const API = axios.create({ baseURL: "http://localhost:5000/api/v1" });
 // const API = axios.create({ baseURL: process.env.REACT_APP_API})
 
 API.interceptors.request.use((req) => {
@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 	return req;
 });
 
-export const signIn = (formData) => API.post("/api/v1/auth/signin", formData);
-export const createUser = (formData) =>
-	API.post("/api/v1/admin/createuser", formData);
-export const getUsers = () => API.get("/api/v1/admin/getusers");
+export const signIn = (formData) => API.post("/auth/signin", formData);
+export const createUser = (formData) => API.post("/admin/createuser", formData);
+export const getUsers = () => API.get("/admin/getusers");
+export const deleteUser = (id) => API.delete(`/admin/deleteuser/${id}`);
