@@ -112,7 +112,7 @@ function Login() {
 								className='mb-24 bg-[#D8D8D8]'
 								label='Password'
 								autoFocus
-								type='text'
+								type='password'
 								error={!!errors.password}
 								helperText={errors?.password?.message}
 								variant='outlined'
