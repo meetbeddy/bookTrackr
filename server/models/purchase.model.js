@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 const purchaseSchema = mongoose.Schema(
 	{
@@ -34,6 +35,11 @@ const purchaseSchema = mongoose.Schema(
 		verified: {
 			type: Boolean,
 			default: false,
+		},
+		transactionBy: {
+			type: Schema.Types.ObjectId,
+			required: true,
+			ref: "user",
 		},
 	},
 

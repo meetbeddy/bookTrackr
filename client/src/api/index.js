@@ -21,6 +21,8 @@ export const deleteUser = (id) => API.delete(`/admin/deleteuser/${id}`);
 export const createPurchase = (data) => API.post("/purchase/addpuchase", data);
 
 export const fetchTextbooks = () => API.get("/admin/gettextbook");
+export const createTextbook = (data) => API.post("/admin/createtextbook", data);
+export const deleteTextbook = (id) => API.delete(`/admin/deletetextbook/${id}`);
 
 export const verifyPurchase = (id) => API.get(`/purchase/verifypurchase/${id}`);
 export const fetchAllPurchases = (query) =>

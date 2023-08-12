@@ -8,6 +8,7 @@ import ManageUsers from "./components/admin/users/ManageUsers";
 import TextbookSalesTracking from "./components/admin/reports/TextBookSalesTracking";
 import Login from "./components/login/Login";
 import Main from "./components/dashboard/Main";
+import Settings from "./components/settings/Settings";
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 				<Route path='verify' element={<VerifyPurchase />}></Route>
 				<Route path='users' element={<ManageUsers />}></Route>
 				<Route path='sales-report' element={<TextbookSalesTracking />}></Route>
+				<Route path='settings' element={<Settings />}></Route>
 			</Route>
 		</Routes>
 	);

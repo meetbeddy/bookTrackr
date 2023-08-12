@@ -9,7 +9,10 @@ export const ALL_USERS = "ALL_USERS";
 export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
-export const FETCH_USERS_BY_USER = "FETCH_PROFILE_USER";
+
+export const ADD_NEW_TEXTBOOK = "ADD_NEW_TEXTBOOK";
+export const ALL_TEXTBOOK = "ALL_TEXTBOOK";
+export const DELETE_TEXTBOOK = "DELETE_TEXTBOOK";
 
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";

@@ -2,6 +2,7 @@ import { asyncWrapper } from "../middlewares/async.js";
 import bcrypt from "bcrypt";
 import user from "../models/users.model.js";
 import Textbook from "../models/textbook.model.js";
+import textbookModel from "../models/textbook.model.js";
 
 /**
  * create new user
@@ -106,12 +107,12 @@ export const createtextbook = asyncWrapper(async (req, res) => {
 				.status(404)
 				.json({ message: "unauthorized to perform this operation" });
 
-		await Textbook.create({
+		const textbook = await Textbook.create({
 			name,
 			price,
 		});
 
-		res.status(201).json({ message: "textbook created" });
+		res.status(201).json({ textbook });
 	} catch (err) {
 		res
 			.status(500)
@@ -124,6 +125,30 @@ export const fetchTextbooks = asyncWrapper(async (req, res) => {
 		const textbooks = await Textbook.find();
 
 		res.status(201).json(textbooks);
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: "Something went wrong", error: err.message });
+	}
+});
+
+export const deletetextbook = asyncWrapper(async (req, res) => {
+	const { role } = req;
+
+	const id = req.params.id;
+
+	try {
+		if (role !== "admin")
+			return res
+				.status(404)
+				.json({ message: "unauthorized to perform this operation" });
+		const deletedtextbook = await Textbook.findByIdAndDelete(id);
+
+		if (!deletedtextbook) {
+			return res.status(404).json({ message: "textbook not found" });
+		}
+
+		return res.status(200).json(deletedtextbook);
 	} catch (err) {
 		res
 			.status(500)

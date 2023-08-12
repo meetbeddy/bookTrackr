@@ -6,6 +6,7 @@ import uniqid from "uniqid";
 export const createPurchase = asyncWrapper(async (req, res) => {
 	const { studentName, regNum, phoneNumber, department, textbook } = req.body;
 
+	const { userId } = req;
 	try {
 		const foundBook = await Textbook.findOne({ _id: textbook });
 
@@ -31,6 +32,7 @@ export const createPurchase = asyncWrapper(async (req, res) => {
 			department,
 			textbook: foundBook.name,
 			amount: foundBook.price,
+			transactionBy: userId,
 		});
 
 		await newPurchase.save();

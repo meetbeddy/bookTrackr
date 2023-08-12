@@ -10,8 +10,6 @@ import {
 } from "../../../actions/adminActions";
 import Swal from "sweetalert2";
 
-import fakeUserList from "../../../data";
-
 const ManageUsers = () => {
 	const [isModalOpen, setModalOpen] = useState(false);
 	// const [users, setUsers] = useState();
